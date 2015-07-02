@@ -1,20 +1,21 @@
 #Quick script by Luke Turvey to find what CDN is being used
 
 from selenium import webdriver #Import
-import sys, os
+import sys, os, time
 
 
 def CDNGET(CDNURL):
 
 	browser = webdriver.Firefox()
-	read = browser.get("http://www.cdnplanet.com/tools/cdnfinder/#site:"+CDNURL)
+	read = browser.get("http://www.cdnplanet.com/tools/cdnfinder/#site:http://"+CDNURL)
 	html = browser.page_source #get URL and open firefox to load page
-
+	
 	with open("html.txt", "a") as file:
 		file.write(html.encode('utf8')) #Have to encode to write to file
 		file.close()
+	time.sleep(1)
 	browser.quit() #Writes HTML to file and closes browser
-	os.system('clear') #clear screen
+	os.system('clear')
 	
 	searchfile = open("html.txt","r") #opens text file and searches for CDN used in the HTML
 	for line in searchfile:
